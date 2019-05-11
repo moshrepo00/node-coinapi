@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const currencyConverterRoutes = require('./routes/curr-converter.route');
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 	next();
 });
+
+app.use('/currency', currencyConverterRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Server is running');
