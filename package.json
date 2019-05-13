@@ -1,17 +1,18 @@
 {
-  "name": "coin",
-  "version": "1.0.0",
-  "description": "Node Express server to access third api's that prevent CORS with client-side JS",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.16.4",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
-  }
+	"name": "coin",
+	"version": "1.0.0",
+	"description": "Node Express server to access third api's that prevent CORS with client-side JS",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"express": "^4.16.4",
+		"request": "^2.88.0",
+		"request-promise": "^4.2.4"
+	}
 }
