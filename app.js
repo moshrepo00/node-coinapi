@@ -1,11 +1,37 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const multer = require('multer');
+
 const currencyConverterRoutes = require('./routes/curr-converter.route');
+const userRoutes = require('./routes/user.route');
 
 const app = express();
 
+const fileStorage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, 'images');
+	},
+	filename: (req, file, cb) => {
+		cb(null, new Date().toISOString() + '-' + file.originalname);
+	}
+});
+
+const fileFilter = (req, file, cb) => {
+	if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+		cb(null, true);
+	} else {
+		cb(null, false);
+	}
+};
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // application/json
+
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
+app.use('/currency', express.static(path.join(__dirname, 'images')));
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,6 +41,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/currency', currencyConverterRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Server is running');
@@ -28,6 +55,11 @@ app.use((error, req, res, next) => {
 	res.status(status).json({ message: message, data: data });
 });
 
-app.listen(process.env.PORT || 8080, () => {
-	console.log('Server is running on port 8080');
-});
+mongoose
+	.connect('mongodb+srv://mos:test@cluster0-cgltt.mongodb.net/new-features?retryWrites=true')
+	.then((result) => {
+		app.listen(process.env.PORT || 8080, () => {
+			console.log('server is running on port 8080');
+		});
+	})
+	.catch((err) => console.log(err));
