@@ -5,7 +5,8 @@ exports.userCreate = (req, res, next) => {
 	let user = new User({
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
-		email: req.body.email
+		email: req.body.email,
+		image: req.file.path
 	});
 
 	user.save().then((user) => {
