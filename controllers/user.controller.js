@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.userCreate = (req, res, next) => {
@@ -12,12 +12,18 @@ exports.userCreate = (req, res, next) => {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
-				password: hashedPw,
+				hash_password: hashedPw,
 				image: req.file.path
 			});
 			return user.save();
 		})
-		.then((result) => {
+		.then((user) => {
 			res.status(201).json(user);
+		})
+		.catch((err) => {
+			if (!err.statusCode) {
+				err.statusCode = 500;
+			}
+			next(err);
 		});
 };
