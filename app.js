@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 
 const currencyConverterRoutes = require('./routes/curr-converter.route');
-const userRoutes = require('./routes/user.route');
+const authRoutes = require('./routes/auth.route');
 
 const app = express();
 
@@ -41,14 +41,13 @@ app.use((req, res, next) => {
 });
 
 app.use('/currency', currencyConverterRoutes);
-app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Server is running');
 });
 
 app.use((error, req, res, next) => {
-	console.log(error);
 	const status = error.statusCode || 500;
 	const message = error.message;
 	const data = error.data;
@@ -56,7 +55,9 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-	.connect('mongodb+srv://mos:test@cluster0-cgltt.mongodb.net/new-features?retryWrites=true')
+	.connect('mongodb+srv://mos:test@cluster0-cgltt.mongodb.net/new-features?retryWrites=true', {
+		useNewUrlParser: true
+	})
 	.then((result) => {
 		app.listen(process.env.PORT || 8080, () => {
 			console.log('server is running on port 8080');
