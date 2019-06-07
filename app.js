@@ -43,11 +43,8 @@ app.use((req, res, next) => {
 app.use('/currency', currencyConverterRoutes);
 app.use('/auth', authRoutes);
 
-app.get('/', (req, res) => {
-	res.send('Server is running');
-});
-
 app.use((error, req, res, next) => {
+	console.log(error.statusCode);
 	const status = error.statusCode || 500;
 	const message = error.message;
 	const data = error.data;

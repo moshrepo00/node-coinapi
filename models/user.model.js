@@ -6,7 +6,7 @@ let UserSchema = new Schema({
 	lastName: { type: String, required: true },
 	email: { type: String, required: true },
 	hash_password: { type: String, required: true },
-	image: { type: String, required: true }
+	image: { type: String, required: false }
 });
 
 // Export the model

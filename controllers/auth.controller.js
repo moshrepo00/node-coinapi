@@ -12,9 +12,13 @@ exports.signup = (req, res, next) => {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: req.body.email,
-				hash_password: hashedPw,
-				image: req.file.path
+				hash_password: hashedPw
 			});
+
+			if (req.file) {
+				user.image = req.file.path;
+			}
+
 			return user.save();
 		})
 		.then((user) => {

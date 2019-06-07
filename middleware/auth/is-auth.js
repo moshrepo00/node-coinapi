@@ -12,10 +12,10 @@ exports.isLoggedIn = (req, res, next) => {
 	const token = authHeader.split(' ')[1];
 	let decodedToken;
 	try {
-		decodedToken = jwt.verify(token, config.js);
+		decodedToken = jwt.verify(token, config.secret);
 	} catch (err) {
-		err.statusCode = 500;
-		throw error;
+		err.statusCode = 403;
+		throw err;
 	}
 	req.userId = decodedToken.userId;
 	next();

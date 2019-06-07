@@ -16,7 +16,7 @@ exports.getConversion = (req, res, next) => {
 
 	rp(requestOptions)
 		.then((response) => {
-			console.log('API call response:', response);
+			// console.log('API call response:', response);
 			res.json(response);
 		})
 		.catch((err) => {
